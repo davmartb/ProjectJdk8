@@ -23,7 +23,7 @@
 
 
 
-	<couchbase:clusterInfo login="Administrator"
+	<couchbase:clusterInfo login="myBucket"
 		password="637Pruebas" />
 
 
@@ -45,10 +45,10 @@
 
 
 
-	<couchbase:template translation-service-ref="myCustomTranslationService" />
+	<couchbase:template />
 
 
 	<couchbase:bucket bucketName="myBucket"
-		bucketPassword="637Pruebas" />
+		bucketPassword="637Pruebas"  />
 
 </beans:beans>
