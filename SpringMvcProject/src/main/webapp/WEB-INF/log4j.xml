@@ -48,17 +48,17 @@
     </appender>	
     
 
-	<logger name="org.apache.axis2" >
+	<!-- <logger name="org.apache.axis2" >
    		<level value="INFO"></level>
 		<appender-ref ref="errLog" />		
 	</logger>
 		<logger name="java.sql" >
    		<level value="INFO"></level>
 		<appender-ref ref="R" />		
-	</logger>
+	</logger> -->
    <!-- Limit the org.apache category to INFO as its DEBUG is verbose -->
    
-   
+ <!--   
    <logger name="com.pkgcomuneshost.host.Conexion" >
    		<level value="OFF"></level>
 		<appender-ref ref="R" />		
@@ -77,13 +77,13 @@
    		<level value="OFF"></level>
 		<appender-ref ref="errLog" />		
 	</logger>
-	
+	 -->
 	
 
 	
 
   <root>   
-     <level value="INFO"></level>
+     <level value="DEBUG"></level>
      <appender-ref ref="R"/>
    </root>  
 </log4j:configuration>
