@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
+
+
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:couchbase="http://www.springframework.org/schema/data/couchbase"
+
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+
+  http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+
+  http://www.springframework.org/schema/data/couchbase
+
+  http://www.springframework.org/schema/data/couchbase/spring-couchbase.xsd">
+
+
+
+	<couchbase:cluster>
+
+		<couchbase:node>127.0.0.1</couchbase:node>
+
+	</couchbase:cluster>
+
+
+
+	<couchbase:clusterInfo login="myBucket"
+		password="637Pruebas" />
+
+
+
+	<beans:bean id="couchbaseEnv"
+		class="com.couchbase.client.java.env.DefaultCouchbaseEnvironment"
+		factory-method="create" />
+
+	<beans:bean id="myCustomTranslationService"
+		class="org.springframework.data.couchbase.core.convert.translation.JacksonTranslationService" />
+
+
+
+	<couchbase:indexManager />
+
+
+
+	<couchbase:repositories base-package="com.company.app.couchbase.repository" />
+
+
+
+	<couchbase:template />
+
+
+	<couchbase:bucket bucketName="myBucket"
+		bucketPassword="637Pruebas"  />
+
+</beans:beans>
