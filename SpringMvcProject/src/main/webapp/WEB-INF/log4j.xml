@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd"> 
+    
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false">
+   
+   <appender name="R" class="org.apache.log4j.ConsoleAppender">		
+	<layout class="org.apache.log4j.PatternLayout">
+	    <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} [%c] %-5p - %m%n" />
+	</layout>
+	</appender> 
+
+   <appender name="errLog" class="org.apache.log4j.DailyRollingFileAppender">
+          <!-- name is the path and name of the log file. -->
+          <param name="File" value="../logs/app.log"/>
+            <param name="DatePattern" value=".yyyy-MM-dd-a"/>
+          <layout class="org.apache.log4j.PatternLayout">
+               <param name="ConversionPattern"
+	              value="%d{yyyy-MM-dd HH:mm:ss}#%-5p#%-30m# %c{1}.%M #(linea:%-4L)  %n" />
+          </layout>
+    </appender> 
+     <appender name="errLogSoap" class="org.apache.log4j.DailyRollingFileAppender">
+          <!-- name is the path and name of the log file. -->
+          <param name="File" value="../appSoapLogs/appSoap.log"/>
+            <param name="DatePattern" value=".yyyy-MM-dd-a"/>
+          <layout class="org.apache.log4j.PatternLayout">
+               <param name="ConversionPattern"
+	              value="%d{yyyy-MM-dd HH:mm:ss}#%-5p#%-30m# %c{1}.%M #(linea:%-4L)  %n" />
+          </layout>
+    </appender>  
+    <appender name="errLogERROR" class="org.apache.log4j.DailyRollingFileAppender">
+          <!-- name is the path and name of the log file. -->
+          <param name="File" value="../logs/appERROR.log"/>
+            <param name="DatePattern" value=".yyyy-MM-dd-a"/>
+          <layout class="org.apache.log4j.PatternLayout">
+               <param name="ConversionPattern"
+	              value="%d{yyyy-MM-dd HH:mm:ss}#%-5p#%-30m# %c{1}.%M #(linea:%-4L)  %n" />
+          </layout>
+    </appender>  
+     <appender name="memoryLog" class="org.apache.log4j.DailyRollingFileAppender">
+          <!-- name is the path and name of the log file. -->
+          <param name="File" value="../logs/app/memoryLogs/memoryLogs.csv"/>
+            <param name="DatePattern" value=".yyyy-MM-dd-a"/>
+          <layout class="org.apache.log4j.PatternLayout">
+               <param name="ConversionPattern"
+	              value="%-30m %n" />
+          </layout>
+    </appender>	
+    
+
+	<!-- <logger name="org.apache.axis2" >
+   		<level value="INFO"></level>
+		<appender-ref ref="errLog" />		
+	</logger>
+		<logger name="java.sql" >
+   		<level value="INFO"></level>
+		<appender-ref ref="R" />		
+	</logger> -->
+   <!-- Limit the org.apache category to INFO as its DEBUG is verbose -->
+   
+ <!--   
+   <logger name="com.pkgcomuneshost.host.Conexion" >
+   		<level value="OFF"></level>
+		<appender-ref ref="R" />		
+	</logger>
+    <logger name="org.directwebremoting" >
+   		<level value="OFF"></level>
+		<appender-ref ref="R" />		
+	</logger>
+	
+	<logger name="org.apache.axis2.deployment.DeploymentEngine" >
+   		<level value="OFF"></level>
+		<appender-ref ref="errLog" />		
+	</logger>
+	
+	<logger name="org.apache.axis2.deployment.ModuleDeployer" >
+   		<level value="OFF"></level>
+		<appender-ref ref="errLog" />		
+	</logger>
+	 -->
+	
+
+	
+
+  <root>   
+     <level value="DEBUG"></level>
+     <appender-ref ref="R"/>
+   </root>  
+</log4j:configuration>
