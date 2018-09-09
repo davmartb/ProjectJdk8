@@ -3,6 +3,11 @@
  */
 package com.company.app.web.controller;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.ApiResponse;
+
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +17,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import com.company.app.commons.exceptions.ServicioException;
 import com.company.app.services.inter.MailServicio;
@@ -27,8 +34,10 @@ public class CustomerRestController {
 	@Autowired
 	MailServicio mailServicio;
 	
+	@ApiOperation(value = "getCustomer", notes = "getCustomer", response = String.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK", response = String.class) })
 	@RequestMapping(value = "/customer/{id}", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity getCustomer(@PathVariable("id") Long id) {
+	public ResponseEntity getCustomer(@ApiParam(name = "id", value = "id", required = true)@PathVariable("id") Long id) {
 
 		
 		try {
