@@ -127,6 +127,26 @@
 			<scope>test</scope>
 		</dependency>
 
+    <dependency>
+      <groupId>com.google.apis</groupId>
+      <artifactId>google-api-services-gmail</artifactId>
+      <version>v1-rev95-1.25.0</version>
+    </dependency>
+    <dependency>
+    <groupId>com.google.apis</groupId>
+    <artifactId>google-api-services-plus</artifactId>
+    <version>v1-rev556-1.25.0</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/com.google.oauth-client/google-oauth-client-jetty -->
+<dependency>
+    <groupId>com.google.oauth-client</groupId>
+    <artifactId>google-oauth-client-jetty</artifactId>
+    <version>1.25.0</version>
+</dependency>
+    
+
+    
+  
 
 	</dependencies>
 	<repositories>
