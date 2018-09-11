@@ -8,7 +8,9 @@ import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInsta
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
@@ -17,7 +19,9 @@ import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.GmailScopes;
 import com.google.api.services.gmail.model.Label;
 import com.google.api.services.gmail.model.ListLabelsResponse;
+import com.google.api.services.gmail.model.Profile;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -31,14 +35,14 @@ import java.util.List;
 public class GmailQuickstart {
 	private static final String APPLICATION_NAME = "Gmail API Java Quickstart";
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
-    private static final String TOKENS_DIRECTORY_PATH = "tokens";
+    private static final String TOKENS_DIRECTORY_PATH = "C:\\Proyecto\\INDITEX\\JIRAS\\ECOMPULL-4668";
 
     /**
      * Global instance of the scopes required by this quickstart.
      * If modifying these scopes, delete your previously saved tokens/ folder.
      */
     private static final List<String> SCOPES = Collections.singletonList(GmailScopes.GMAIL_LABELS);
-    private static final String CREDENTIALS_FILE_PATH = "/My Project-fe62d8b17911.json";
+    private static final String CREDENTIALS_FILE_PATH = "/liquid-force-215806-8bdefc892ab6.json";
 
     /**
      * Creates an authorized Credential object.
@@ -66,9 +70,10 @@ public class GmailQuickstart {
         Gmail service = new Gmail.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
                 .setApplicationName(APPLICATION_NAME)
                 .build();
-
+        
         // Print the labels in the user's account.
         String user = "me";
+        Profile profile = service.users().getProfile(user).execute();
         ListLabelsResponse listResponse = service.users().labels().list(user).execute();
         List<Label> labels = listResponse.getLabels();
         if (labels.isEmpty()) {
@@ -79,5 +84,36 @@ public class GmailQuickstart {
                 System.out.printf("- %s\n", label.getName());
             }
         }
+    }
+    
+    public GoogleCredential getGoogleCredential2() throws Exception
+    {
+       
+
+        HttpTransport httpTransport = null;
+        GoogleCredential credential=null;
+        try
+        {
+            httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+            GoogleCredential.Builder build = new GoogleCredential.Builder();
+            credential = build.setServiceAccountUser("cuenta@dominio.com").setServiceAccountScopes(SCOPES)
+            .setServiceAccountId("110626123494229700515")
+            .setTransport(httpTransport)
+            .setJsonFactory(JSON_FACTORY)                        
+            .setServiceAccountPrivateKeyFromP12File(new File("C:\\Proyecto\\INDITEX\\JIRAS\\ECOMPULL-4668\\strong-return-214807-8e2d0a5ca808.p12")) 
+            .setServiceAccountProjectId("strong-return-214807")
+            .setServiceAccountId("mygmailaccount@liquid-force-215806.iam.gserviceaccount.com")
+            .build();
+            credential.refreshToken();
+            
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }// .createScoped(Collections.singleton(DriveScopes.DRIVE_READONLY));
+             
+      
+       
+        return credential;
     }
 }
