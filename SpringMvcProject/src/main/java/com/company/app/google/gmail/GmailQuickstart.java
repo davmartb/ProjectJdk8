@@ -41,7 +41,7 @@ public class GmailQuickstart {
      * Global instance of the scopes required by this quickstart.
      * If modifying these scopes, delete your previously saved tokens/ folder.
      */
-    private static final List<String> SCOPES = Collections.singletonList(GmailScopes.GMAIL_LABELS);
+    private static final List<String> SCOPES = Collections.singletonList(GmailScopes.GMAIL_READONLY);
     private static final String CREDENTIALS_FILE_PATH = "/liquid-force-215806-8bdefc892ab6.json";
 
     /**
@@ -66,6 +66,14 @@ public class GmailQuickstart {
 
     public static void main(String... args) throws IOException, GeneralSecurityException {
         // Build a new authorized API client service.
+    	GoogleCredential credential =  null;
+    	try {
+			 credential = getGoogleCredential2();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
         Gmail service = new Gmail.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
                 .setApplicationName(APPLICATION_NAME)
@@ -86,7 +94,7 @@ public class GmailQuickstart {
         }
     }
     
-    public GoogleCredential getGoogleCredential2() throws Exception
+    public static GoogleCredential getGoogleCredential2() throws Exception
     {
        
 
@@ -96,12 +104,12 @@ public class GmailQuickstart {
         {
             httpTransport = GoogleNetHttpTransport.newTrustedTransport();
             GoogleCredential.Builder build = new GoogleCredential.Builder();
-            credential = build.setServiceAccountUser("cuenta@dominio.com").setServiceAccountScopes(SCOPES)
-            .setServiceAccountId("110626123494229700515")
+            credential = build.setServiceAccountUser("davmartrabajo@gmail.com").setServiceAccountScopes(SCOPES)
+            .setServiceAccountId("112753531067549060478")
             .setTransport(httpTransport)
             .setJsonFactory(JSON_FACTORY)                        
-            .setServiceAccountPrivateKeyFromP12File(new File("C:\\Proyecto\\INDITEX\\JIRAS\\ECOMPULL-4668\\strong-return-214807-8e2d0a5ca808.p12")) 
-            .setServiceAccountProjectId("strong-return-214807")
+            .setServiceAccountPrivateKeyFromP12File(new File("D:\\desarrollo\\Proyectos\\datos\\My Project-73d3bfa3a349.p12")) 
+            .setServiceAccountProjectId("liquid-force-215806")
             .setServiceAccountId("mygmailaccount@liquid-force-215806.iam.gserviceaccount.com")
             .build();
             credential.refreshToken();
