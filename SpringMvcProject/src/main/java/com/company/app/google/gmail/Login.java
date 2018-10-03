@@ -3,23 +3,34 @@
  */
 package com.company.app.google.gmail;
 
+import com.google.api.Page;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
+import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeTokenRequest;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
+import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.apache.ApacheHttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.json.JsonFactory;
+import com.google.api.client.util.Lists;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.gmail.GmailScopes;
 import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.model.ListMessagesResponse;
+import com.google.api.services.storage.model.Bucket;
+import com.google.auth.Credentials;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.StorageOptions;
 
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -131,16 +142,71 @@ public class Login {
      */
     public static void startAuthentication() throws Exception {
         Credential credential = authorize2();
+        String accestoken = credential.getAccessToken();
         service =  new Gmail.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
                 .setApplicationName(APPLICATION_NAME)
                 .build();
         ListMessagesResponse listMensajes=  service.users().messages().list("me").execute();
         System.out.println("prueba");
     }
+    
+    public static void startauthentication3(){
+    	try {
+			
+		
+    	 InputStream in =
+                 Login.class.getResourceAsStream("/liquid-force-215806-34a43f92a5ce.json");
+    		  // You can specify a credential file by providing a path to GoogleCredentials.
+    		  // Otherwise credentials are read from the GOOGLE_APPLICATION_CREDENTIALS environment variable.
+    		  Credentials  credentials = GoogleCredentials.fromStream(in)
+    		        .createScoped(com.google.common.collect.Lists.newArrayList("https://www.googleapis.com/auth/cloud-platform"));
+    		  Storage storage = StorageOptions.newBuilder().setCredentials(credentials).build().getService();
+    		  com.google.api.gax.paging.Page<com.google.cloud.storage.Bucket> buckets =  storage.list();
+    		  for (com.google.cloud.storage.Bucket bucket : buckets.iterateAll()) {
+  		    System.out.println(bucket.toString());
+  		  }
+    		  
+//    		  System.out.println("Buckets:");
+//    		  Page<Bucket> buckets = storage.list();
+//    		  for (Bucket bucket : buckets.iterateAll()) {
+//    		    System.out.println(bucket.toString());
+//    		  }
+    		
+    	} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
+    
+    
+    public static void startAuthentication2() throws Exception{
+    	
+    	String CLIENT_SECRET_FILE = "/path/to/client_secret.json";
+
+    	String authCode =null;
+    	
+    	// Exchange auth code for access token
+    	GoogleClientSecrets clientSecrets =
+    	    GoogleClientSecrets.load(
+    	        JacksonFactory.getDefaultInstance(), new FileReader(CLIENT_SECRET_FILE));
+    	GoogleTokenResponse tokenResponse =
+    	          new GoogleAuthorizationCodeTokenRequest(
+    	              new NetHttpTransport(),
+    	              JacksonFactory.getDefaultInstance(),
+    	              "https://www.googleapis.com/oauth2/v4/token",
+    	              clientSecrets.getDetails().getClientId(),
+    	              clientSecrets.getDetails().getClientSecret(),
+    	              authCode,
+    	              null)  // Specify the same redirect URI that you use with your web
+    	                             // app. If you don't have a web version of your app, you can
+    	                             // specify an empty string.
+    	              .execute();
+
+    	String accessToken = tokenResponse.getAccessToken();
+    }
 public static void main(String[] args){
     	
     	try {
-    		startAuthentication();
+    		startauthentication3();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
