@@ -25,12 +25,12 @@ public class HelloController {
 
 	protected final Log logger = LogFactory.getLog(getClass());
 
-    @RequestMapping(value="/hello.htm", method = RequestMethod.GET)
+    @RequestMapping(value="/hello", method = RequestMethod.GET)
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         logger.info("Returning hello view prueba, nuevo cambio dhjd");
 
-        return new ModelAndView("hello.jsp");
+        return new ModelAndView("hello");
     }
 }
