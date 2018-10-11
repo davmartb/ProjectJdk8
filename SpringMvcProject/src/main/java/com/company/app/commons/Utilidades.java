@@ -58,27 +58,27 @@ public class Utilidades {
 	
 	public static final String CONSTANTE_ERROR_PARSE = "Error al parsear la fecha: ";
 	
-	public static String ASOCIACION_NIF_STRING = "TRWAGMYFPDXBNJZSQVHLCKET";
+	public static final String ASOCIACION_NIF_STRING = "TRWAGMYFPDXBNJZSQVHLCKET";
 	
 	public static final String CONSTANTES_T_RESIDENCIA_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	
-	public static String CONSTANTE_COMA = ",";
+	public static final String CONSTANTE_COMA = ",";
 	
-	public static String CONSTANTE_PUNTO = ".";
+	public static final String CONSTANTE_PUNTO = ".";
 	
-	public static String CONSTANTE_SEPARACION_DECIMAL = ",00";
+	public static final String CONSTANTE_SEPARACION_DECIMAL = ",00";
 	
-	public static String CONSTANTE_RELLENO_DECIMAL = "0";
+	public static final String CONSTANTE_RELLENO_DECIMAL = "0";
 	
 	public static final String CONSTANTE_ERROR_PARSE_NUMERO = "Error al parsear el número: ";
 	
-	public static String CONSTANTE_FORMATO_ENTRADA = " Formato de entrada: ";
+	public static final String CONSTANTE_FORMATO_ENTRADA = " Formato de entrada: ";
 	
-	public static String CONSTANTE_FORMATO_SALIDA = " Formato de salida: ";
+	public static final String CONSTANTE_FORMATO_SALIDA = " Formato de salida: ";
 	
-	public static String CONSTANTE_FECHA_A_FORMATEAR = " Fecha a formatear: ";
+	public static final String CONSTANTE_FECHA_A_FORMATEAR = " Fecha a formatear: ";
 	
-	public static String CONSTANTE_METHOD_OBTENERIPSERVIDORLOCAL="obtenerIpServidorLocal";
+	public static final String CONSTANTE_METHOD_OBTENERIPSERVIDORLOCAL="obtenerIpServidorLocal";
 	
 	public static final char CONSTANTE_MODO_ENCRIPTAR = 'E';
 	
@@ -143,8 +143,7 @@ public class Utilidades {
 				if (!(fecha.equals(""))){
 					//Se convierte la fecha string en fecha date	
 					SimpleDateFormat simpleDateFormat = new SimpleDateFormat(FORMATO_FECHA_VISUAL);
-					Date fechaDate = simpleDateFormat.parse(fecha);
-					return fechaDate;
+					return simpleDateFormat.parse(fecha);
 				}else{
 					logger.error(CONSTANTE_ERROR_PARSE);
 					return null;
@@ -154,7 +153,7 @@ public class Utilidades {
 				return null;			
 			}
 		}
-		catch (ParseException _e) {
+		catch (ParseException e) {
 	
 			logger.error(CONSTANTE_ERROR_PARSE);
 			return null;
@@ -169,7 +168,7 @@ public class Utilidades {
 	 */
 	public static String utilidadesFecha(String formatoEntrada,String formatoSalida,String fechaFormatear){
 		
-			StringBuffer stBuffer = null;
+			StringBuilder stBuffer = null;
 		
 			char[] tempEntrada=new char[10];
 			char[] tempSalida=new char[10];
@@ -177,7 +176,9 @@ public class Utilidades {
 			char anterior=' ';
 			int tamAnioE=0; //Si el año entra con 2 o 4 cifras
 			int tamAnioS=0; //Si el año sale con 2 o 4 cifras
-			String anio="",mes="",dia="";
+			String anio="";
+			String mes="";
+			String dia="";
 			boolean isError = false;			
 			String fechaFinal="";	
 			
@@ -244,7 +245,7 @@ public class Utilidades {
 			}
 			if (isError){
 				if ((fechaFormatear != null && !("0").equals(fechaFormatear))||fechaFormatear==null){					
-					stBuffer = new StringBuffer();
+					stBuffer = new StringBuilder();
 					stBuffer.append(CONSTANTE_ERROR_PARSE);
 					stBuffer.append(CONSTANTE_FORMATO_ENTRADA);
 					stBuffer.append(formatoEntrada);
@@ -261,17 +262,17 @@ public class Utilidades {
 	
 	private static boolean comprobarValidezFecha(String formatoEntrada,String formatoSalida,String fechaFormatear){
 		boolean isValido = false;
-			if (formatoEntrada.indexOf("-")>0){
+			if (formatoEntrada.indexOf("-")>=0){
 				formatoEntrada = formatoEntrada.replaceAll("-", "");
 			} else {
-				if (formatoEntrada.indexOf("/")>0){
+				if (formatoEntrada.indexOf("/")>=0){
 					formatoEntrada = formatoEntrada.replaceAll("/", "");
 				}
 			}
-			if (formatoSalida.indexOf("-")>0){
+			if (formatoSalida.indexOf("-")>=0){
 				formatoSalida = formatoSalida.replaceAll("-", "");
 			} else {
-				if (formatoSalida.indexOf("/")>0){
+				if (formatoSalida.indexOf("/")>=0){
 					formatoSalida = formatoSalida.replaceAll("/", "");
 				}
 			}
@@ -293,7 +294,7 @@ public class Utilidades {
 	    InputStream reportSource = null;
 	    Properties properties = new Properties();
 	    String strResult = null;
-	    StringBuffer stbBuffer = null;
+	    StringBuilder stbBuffer = null;
 	    String strIdiomaUp = null;
 	    String strValor = null;
 	    boolean isOut = false;
@@ -313,7 +314,7 @@ public class Utilidades {
 		if (strResult == null){
 		    logger.warn(CONSTANTE_ERROR_KEY+strKey);
 		} else {
-		    stbBuffer = new StringBuffer();
+		    stbBuffer = new StringBuilder();
 		    for (int j = 0; j < strValores.length && !isOut; j++) {
 			String string = strValores[j];
 			strValor = "{"+j+"}";
@@ -509,17 +510,17 @@ public class Utilidades {
 	    documento = strNif.substring(0, strNif.length() - 1);
         
 	    letraDocumento = strNif.substring(strNif.length() - 1);
-	    if (("X").equals(documento.substring(0, 1).toUpperCase()) 
-		    || ("Y").equals(documento.substring(0, 1).toUpperCase())
-		    || ("Z").equals(documento.substring(0, 1).toUpperCase())) {
+	    if (("X").equalsIgnoreCase(documento.substring(0, 1)) 
+		    || ("Y").equalsIgnoreCase(documento.substring(0, 1))
+		    || ("Z").equalsIgnoreCase(documento.substring(0, 1))) {
 		// tiene XYZ delante, es un NIE
-		isValido = false;
+		return false;
 	    } else {
 	    
 		char letraResultado = ASOCIACION_NIF_STRING.charAt(Integer.parseInt(documento) % 23);
 
 		if (letraResultado == letraDocumento.charAt(0)){
-		    isValido = true;
+		    return true;
 		}
 	    }
 	    return isValido;
@@ -539,10 +540,10 @@ public class Utilidades {
 	    if (strNif == null || esNif(strNif))
 	    	return isValido;
 	    
-	    if (("Y").equals(strNif.substring(0,1).toUpperCase())){
+	    if (("Y").equalsIgnoreCase(strNif.substring(0,1))){
        		 strNumSuma="1";
 	 	 }
-	 	if (("Z").equals(strNif.substring(0,1).toUpperCase())){
+	 	if (("Z").equalsIgnoreCase(strNif.substring(0,1))){
 	 		strNumSuma="2";
 	 	 }
         
@@ -579,10 +580,10 @@ public class Utilidades {
 	         if (isNif){
 	        	 documento = strNif.substring(0, strNif.length() - 1);
 	         }else{
-	        	 if (("Y").equals(strNif.substring(0,1).toUpperCase())){
+	        	 if (("Y").equalsIgnoreCase(strNif.substring(0,1))){
 	        		 strNumSuma="1";
 	          	 }
-	          	 if (("Z").equals(strNif.substring(0,1).toUpperCase())){
+	          	 if (("Z").equalsIgnoreCase(strNif.substring(0,1))){
 	          		strNumSuma="2";
 	          	 }
 	             documento = strNumSuma+strNif.substring(1, strNif.length() - 1);
@@ -609,7 +610,7 @@ public class Utilidades {
 	 * @return String.
 	 */
 	public static String obtenerImportePresentacion(String strImporte) {
-		StringBuffer stbResult = new StringBuffer("");
+		StringBuilder stbResult = new StringBuilder("");
 		String strResultAux = null;
 		String strValor = null;
 		String strComa = null;		
@@ -621,14 +622,14 @@ public class Utilidades {
 			
 			//si viene un numero empezando con una comma ponemos un 0 delante
 			if (strImporte.charAt(0) == ',') {
-				stbResult = new StringBuffer();
+				stbResult = new StringBuilder();
 				stbResult.append(strImporte);
 				stbResult.insert(0, '0');
 				strImporte = stbResult.toString();
 			}
 
 				posComa = strImporte.indexOf(',');
-				stbResult = new StringBuffer();
+				stbResult = new StringBuilder();
 				if (posComa >= 0) {
 					if (strImporte.length() > posComa + 2) {
 						posFinal = posComa+3;						
@@ -717,7 +718,7 @@ public class Utilidades {
 	public static String formatoFechaHoraSistema(){
 		
 		Calendar c1 = Calendar.getInstance();
-		StringBuffer stbFecha = new StringBuffer();
+		StringBuilder stbFecha = new StringBuilder();
 		String dia ="";
 		String mes ="";	
 		String hora="";
@@ -776,9 +777,8 @@ public class Utilidades {
 			if (strFechComparar!= null && strFechComparar.length()>=14){
 				strFechSistema = formatoFechaHoraSistema();
 				
-				if (strFechSistema!= null && strFechSistema.length()>=14){
-					//verificamos siempre que la fecha de sistema es superior, y tambien que corresponden al mismo día
-					if (strFechSistema.compareTo(strFechComparar)>=0 && strFechSistema.substring(0,8).equals(strFechComparar.substring(0,8))){						
+				//verificamos siempre que la fecha de sistema es superior, y tambien que corresponden al mismo día
+				if (strFechSistema!= null && strFechSistema.length()>=14 && strFechSistema.compareTo(strFechComparar)>=0 && strFechSistema.substring(0,8).equals(strFechComparar.substring(0,8))){						
 						horaSistema = Integer.parseInt(strFechSistema.substring(8, 10));
 						horaComparar = Integer.parseInt(strFechComparar.substring(8, 10));
 						minComparar = Integer.parseInt(strFechComparar.substring(10, 12));
@@ -787,7 +787,7 @@ public class Utilidades {
 						horaSistema = (horaSistema* 60)+ minSistema;
 						horaComparar = (horaComparar*60)+ minComparar;
 						min = horaSistema-horaComparar;											
-					}
+					
 				}
 			}						
 		} catch (Exception e) {
@@ -804,7 +804,7 @@ public class Utilidades {
 	 *   @param strMetodo
 	 */
 	public static String escribirLogException(Exception e, Logger log, String strClase, String strMetodo){
-		StringBuffer stbMensaje = new StringBuffer();
+		StringBuilder stbMensaje = new StringBuilder();
 		StringWriter sw = new StringWriter();
 		e.printStackTrace(new PrintWriter(sw));
 		
@@ -829,7 +829,7 @@ public class Utilidades {
 	 *   @param strMensaje  
 	 */
 	public static void escribirLogDistException(Exception e, Logger log, String strClase, String strMetodo){
-		StringBuffer stbMensaje = new StringBuffer();		
+		StringBuilder stbMensaje = new StringBuilder();		
 		
 		stbMensaje.append(Constantes.CONSTANTE_CLASE);
 		stbMensaje.append(strClase);
@@ -849,7 +849,7 @@ public class Utilidades {
 	 *   @param strMensaje  
 	 */
 	public static void escribirLogDistException(Logger log, String strClase, String strMetodo, String strMensaje){
-		StringBuffer stbMensaje = new StringBuffer();		
+		StringBuilder stbMensaje = new StringBuilder();		
 		
 		stbMensaje.append(Constantes.CONSTANTE_CLASE);
 		stbMensaje.append(strClase);
@@ -868,7 +868,7 @@ public class Utilidades {
 	 *   @param strMensaje  
 	 */
 	public static void escribirLogInfo(Logger log, String strClase, String strMetodo, String strMensaje){
-		StringBuffer stbMensaje = new StringBuffer();		
+		StringBuilder stbMensaje = new StringBuilder();		
 		
 		stbMensaje.append(Constantes.CONSTANTE_CLASE);
 		stbMensaje.append(strClase);
@@ -892,7 +892,7 @@ public class Utilidades {
 	 *   @param strMensaje  
 	 */
 	public static void escribirLogDebug(Logger log, String strClase, String strMetodo, String strMensaje){
-		StringBuffer stbMensaje = new StringBuffer();		
+		StringBuilder stbMensaje = new StringBuilder();		
 		
 		stbMensaje.append(Constantes.CONSTANTE_CLASE);
 		stbMensaje.append(strClase);
@@ -932,9 +932,9 @@ public class Utilidades {
 		}
 
 		if (nifNieValido(strCif)){
-			isValido = true;
+			return true;
 		}else if (strCif.length() < 9){			
-			isValido = false;
+			return false;
 		}else{			
 			for(int i=0; i< letras.length; i++){
 				if(letra.equals(letras[i])){
@@ -942,7 +942,7 @@ public class Utilidades {
 				}
 			}
 			if(!isOk){
-				isValido = false;
+				return false;
 			}
 		}		
 		if(isOk){
@@ -958,11 +958,11 @@ public class Utilidades {
 			int suma = 64 + temp;						
 			
 			if(temp == 10 && (strCif.charAt(strCif.length()-1) == 'J' || strCif.charAt(strCif.length()-1) == 0)){
-				isValido = true;
+				return true;
 			}else if (digito == temp || strCif.charAt(strCif.length()-1) == (char)suma){
-				isValido = true;
+				return true;
 			}else{
-				isValido = false;
+				return false;
 			}
 		}
 		return isValido;
@@ -994,7 +994,7 @@ public class Utilidades {
 	//lo recorre, cuando encuentra información la encripta si no la informa con null.
 	public static String obtenerStringVO(Object object, String entidad, boolean isEncrip){
 		
-		StringBuffer stbCadena = new StringBuffer();
+		StringBuilder stbCadena = new StringBuilder();
 		if (object!=null){
 			Field[] fields = object.getClass().getDeclaredFields();
 			String strField = null;
@@ -1177,10 +1177,10 @@ public class Utilidades {
 	
 	
 	public static  String formalizarNombreDocumento(String strNombre){
-		StringBuffer stbResult = null;
+		StringBuilder stbResult = null;
 		String[] strNombres = null;		
 		
-		stbResult = new StringBuffer();
+		stbResult = new StringBuilder();
 		if (strNombre!=null && strNombre.indexOf(".")>0){
 			strNombres = strNombre.split("\\.");
 			if (strNombres.length>2){
@@ -1476,7 +1476,7 @@ public class Utilidades {
 			 *   @param strMensaje  
 			 */
 			public static void escribirLogWarn(Logger log, String strClase, String strMetodo, String strMensaje){
-				StringBuffer stbMensaje = new StringBuffer();		
+				StringBuilder stbMensaje = new StringBuilder();		
 				
 				stbMensaje.append(Constantes.CONSTANTE_CLASE);
 				stbMensaje.append(strClase);
@@ -1693,7 +1693,7 @@ public class Utilidades {
 			 */
 			public static void escribirLogInfoAdicional(Logger log, String strClase, String strMetodo, String strMensaje){
 				if (SetUp.isAdicionalLogs()){
-					StringBuffer stbMensaje = new StringBuffer();		
+					StringBuilder stbMensaje = new StringBuilder();		
 					
 					stbMensaje.append(Constantes.CONSTANTE_CLASE);
 					stbMensaje.append(strClase);
