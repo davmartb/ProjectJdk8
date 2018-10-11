@@ -199,7 +199,7 @@
 					</webResources>
 				</configuration>
 			</plugin>
-			<plugin>
+<!-- 			<plugin>
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
 				<version>9.4.12.v20180830</version>
@@ -215,7 +215,7 @@
 					</webAppConfig>
 					<jettyXml>${pom.basedir}/etc/jetty.xml</jettyXml>
 					<reload>manual</reload>
-					<!-- <war>${basedir}/target/mycustom.war</war> -->
+					<war>${basedir}/target/mycustom.war</war>
 
 
 				</configuration>
@@ -239,7 +239,7 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
+			</plugin> -->
 			<plugin>
 				<groupId>org.apache.tomcat.maven</groupId>
 				<artifactId>tomcat-maven-plugin</artifactId>
