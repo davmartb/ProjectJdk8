@@ -37,10 +37,6 @@ public class Cifrador {
 	}
 	
 	protected static final Logger logger = Logger.getLogger(Cifrador.class);
-
-	private static final String CONSTANTE_KEY_CLAVE = "cifrador.clave.";
-	
-	private static final String CONSTANTE_RUTA_CIFRADOR_PROPERTIES = "cifrador.properties";
 	
 	private static final String ALGORITMO_ENCRIPTACION = "PBEWITHSHAAND3-KEYTRIPLEDES-CBC";
 	//
@@ -76,16 +72,9 @@ public class Cifrador {
 		try {
 			// Crear la key
 			String clave = "fNLBEMGxm2Cm05W8j7nejMm08fJobYTv";
-			//String clave = null;
 			
-			if (entidad!= null){
-				//clave = Utilidades.obtenerValorFicheroProperties(CONSTANTE_KEY_CLAVE+entidad, CONSTANTE_RUTA_CIFRADOR_PROPERTIES);
-			}
 			if (clave!=null){
-//				
-	//	        System.out.println("Algoritmo: "+ALGORITMO_ENCRIPTACION);
-	//	        System.out.println("salt: "+SALT_BYTES.toString());
-	//	        System.out.println("clave: "+ clave);
+
 		        KeySpec keySpec = new PBEKeySpec(clave.toCharArray(), SALT_BYTES, ITERATION_COUNT);
 			
 			    SecretKey key = SecretKeyFactory.getInstance(alg, bouncy).generateSecret(keySpec);
@@ -145,35 +134,19 @@ public class Cifrador {
 
 	public static void main(String[] args) {
 
-//		Provider[] provs = Security.getProviders();
-//		for (int i = 0; i < provs.length; i++) {
-//			Iterator it = provs[i].keySet().iterator();
-//			while (it.hasNext()) {
-//				String key = (String) it.next();
-//				if (key.startsWith("Alg.Alias.SecretKeyFactory")) {
-//					System.out.println(key.substring(27));
-//				} else if (key.startsWith("SecretKeyFactory")) {
-//					System.out.println(key.substring(17));
-//				}
-//			}
-//		}
+
 		BouncyCastleProvider provider = new BouncyCastleProvider();
 		
 			Cifrador.setBouncy(provider);
 				
 			String entidad =  "VIVANTA";
 			System.out.println("Entidad:   "+entidad);
-			//System.out.println("Clave Pre:   "+Utilidades.obtenerValorFicheroProperties(CONSTANTE_KEY_CLAVE+entidad, CONSTANTE_RUTA_CIFRADOR_PROPERTIES));
+			
 			System.out.println("******************************************************************************");
 			imprimirDatosUsuarios("ws45622001", "WS3RV1", entidad);
 			System.out.println("******************************************************************************");
 			imprimirDatosUsuarios("ws45622004", "WS3RV1", entidad);
-			
-		
-					
-			
-			
-			
+						
 		}
 	
 	public static void imprimirDatosUsuarios(String strUsuario, String strPassword, String entidad){

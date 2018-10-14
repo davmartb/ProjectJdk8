@@ -82,7 +82,7 @@ public final class HexSupport {
     	String strResult = null;
     	try {
 					
-	        StringBuffer rc = new StringBuffer(bytes.length * 2);
+	        StringBuilder rc = new StringBuilder(bytes.length * 2);
 	        for (int i = 0; i < bytes.length; i++) {
 	            rc.append(HEX_TABLE[0xFF & bytes[i]]);
 	        }
@@ -102,7 +102,7 @@ public final class HexSupport {
     public static String toHexFromInt(int value, boolean trim) {
     	String strResult = null;
     	try {
-		        StringBuffer rc = new StringBuffer(INT_OFFSETS.length*2);
+    		StringBuilder rc = new StringBuilder(INT_OFFSETS.length*2);
 		        for (int i = 0; i < INT_OFFSETS.length; i++) {
 		          int b = 0xFF & (value>>INT_OFFSETS[i]);
 		          if( !(trim && b == 0) ) { 
@@ -120,7 +120,7 @@ public final class HexSupport {
     public static String byteArrayToHexString(byte[] array) {
     	String strResult = null;
     	try {
-	        StringBuffer hexString = new StringBuffer();
+    		StringBuilder hexString = new StringBuilder();
 	        for (int i = 0; i < array.length; i++) {
 	        	byte b = array[i];
 	        	int intVal = b & 0xff;
