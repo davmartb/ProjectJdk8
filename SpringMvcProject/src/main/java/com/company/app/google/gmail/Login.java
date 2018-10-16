@@ -23,6 +23,7 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.gmail.GmailScopes;
 import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.model.ListMessagesResponse;
+import com.google.api.services.gmail.model.Message;
 import com.google.api.services.storage.model.Bucket;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.GoogleCredentials;
@@ -35,6 +36,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 public class Login {
@@ -117,7 +119,7 @@ public class Login {
     	
      
     	 GoogleCredential cr = GoogleCredential
-                 .fromStream(new FileInputStream("D://desarrollo//Proyectos//datos//liquid-force-215806-34a43f92a5ce.json"))
+                 .fromStream(new FileInputStream("C://desarrollo//Proyectos//datos//dmbproject-216714-9df7ffae0618.json"))
                  .createScoped(SCOPES);
            return new GoogleCredential.Builder()
                  .setTransport(HTTP_TRANSPORT)
@@ -127,7 +129,7 @@ public class Login {
                  .setServiceAccountPrivateKey(cr.getServiceAccountPrivateKey())
                  .setServiceAccountPrivateKeyId(cr.getServiceAccountPrivateKeyId())
                  .setTokenServerEncodedUrl(cr.getTokenServerEncodedUrl())
-                 .setServiceAccountUser("davmartrabajo@gmail.com").build();
+                 .setServiceAccountUser("davidmartinb@dmbprojects.net").build();
 //            Directory directory = new Directory.Builder(
 //                  httpTransport, jsonFactory, builder.build()) 
 //                 .setApplicationName(config.getProperty("google.application.name")).build();
@@ -147,6 +149,16 @@ public class Login {
                 .setApplicationName(APPLICATION_NAME)
                 .build();
         ListMessagesResponse listMensajes=  service.users().messages().list("me").execute();
+        if (listMensajes!=null && !listMensajes.isEmpty() && listMensajes.getMessages()!=null) {
+        	for (Iterator iterator = listMensajes.getMessages().iterator(); iterator.hasNext();) {
+				Message message = (Message) iterator.next();
+				if (message!=null) {
+					Message msg= service.users().messages().get("me",  message.getId()).execute();
+					System.out.println("punto");
+				}
+			}
+        	
+        }
         System.out.println("prueba");
     }
     
@@ -206,7 +218,7 @@ public class Login {
 public static void main(String[] args){
     	
     	try {
-    		startauthentication3();
+    		startAuthentication();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
