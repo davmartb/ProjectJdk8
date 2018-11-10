@@ -19,9 +19,9 @@ import com.company.app.web.controller.CustomerRestController;
  * @author david
  *
  */
-@Configuration
-@EnableSwagger2
-@ComponentScan(basePackageClasses = { CustomerRestController.class })
+//@Configuration
+//@EnableSwagger2
+//@ComponentScan(basePackageClasses = { CustomerRestController.class })
 public class Swagger2UiConfiguration{
 
 	 /**
