@@ -12,7 +12,7 @@ public class MediaVOMapper implements RowMapper<MediaVO>{
 	public MediaVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 		MediaVO mediaVO = new MediaVO();
 		mediaVO.setMedia_id(rs.getInt("media_id"));
-		mediaVO.setMedia_ref_id(rs.getString("media_ref_id"));
+		mediaVO.setMedia_ref_id(rs.getInt("media_ref_id"));
 		mediaVO.setMedia_obj_type(rs.getString("media_obj_type"));
 		mediaVO.setMedia_mime(rs.getString("media_mime"));
 		mediaVO.setMedia_tags(rs.getString("media_tags"));
