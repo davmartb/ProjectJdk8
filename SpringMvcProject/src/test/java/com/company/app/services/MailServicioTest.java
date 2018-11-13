@@ -14,7 +14,7 @@ import com.company.app.services.inter.MailServicio;
  * <p>Nombre Clase: MailServicioTest</p>
  * <p>Descripcion</p>
  * <p>Metodos de la clase</p>
- * @author A161496 - ATOS Origin
+ * @author 
  * 
  * @d10/05/2010
  */

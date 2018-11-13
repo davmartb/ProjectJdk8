@@ -11,7 +11,7 @@ public class MediaVO implements Serializable{
 	private static final long serialVersionUID = -8558817688210530494L;
 	
 	private Integer media_id;
-	private String media_ref_id;
+	private Integer media_ref_id;
 	private String media_obj_type;
 	private String media_mime;
 	private String media_tags;
@@ -31,10 +31,10 @@ public class MediaVO implements Serializable{
 	public void setMedia_id(Integer media_id) {
 		this.media_id = media_id;
 	}
-	public String getMedia_ref_id() {
+	public Integer getMedia_ref_id() {
 		return media_ref_id;
 	}
-	public void setMedia_ref_id(String media_ref_id) {
+	public void setMedia_ref_id(Integer media_ref_id) {
 		this.media_ref_id = media_ref_id;
 	}
 	public String getMedia_obj_type() {
