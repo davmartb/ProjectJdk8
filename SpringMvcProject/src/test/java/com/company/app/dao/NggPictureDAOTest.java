@@ -5,7 +5,6 @@ package com.company.app.dao;
 
 
 import java.sql.Timestamp;
-import java.util.Date;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
